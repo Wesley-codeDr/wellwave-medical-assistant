@@ -1,0 +1,393 @@
+{
+  "meta": {
+    "documento": "PRD – Sistema de Anamnese Digital para Emergência",
+    "versao": "1.0",
+    "status": "draft",
+    "lingua": "pt-BR",
+    "gerado_em": "2025-09-14",
+    "contexto": {
+      "dispositivos": ["PC consultório (rede estável)", "Smartphones pessoais (BYOD)"],
+      "mix_uso": "não definido"
+    }
+  },
+  "visao_produto": {
+    "declaracao": "Desenvolver um sistema web de anamnese digital anônimo, otimizado para médicos de pronto-socorro, que padroniza a coleta de dados clínicos através de interfaces intuitivas baseadas em checkboxes, gerando documentação médica tecnicamente precisa e juridicamente segura, fundamentada em evidências.",
+    "proposta_valor": [
+      "Eficiência: redução ~70% no tempo de documentação",
+      "Padronização: anamneses completas seguindo protocolos",
+      "Segurança jurídica: documentação defensável",
+      "Anonimato: proteção de identidade do paciente (LGPD)"
+    ]
+  },
+  "objetivos_kpis": {
+    "objetivos": [
+      "Reduzir tempo médio de anamnese de 15–20min para 5–7min",
+      "Garantir 100% de completude dos campos obrigatórios",
+      "Aumentar aderência a protocolos em 80%",
+      "Zero vazamento de dados pessoais identificáveis"
+    ],
+    "kpis": [
+      "Tempo médio por anamnese",
+      "Taxa de completude",
+      "NPS do médico",
+      "Adoção semanal (usuários ativos)",
+      "Nº de templates por síndrome",
+      "% de anamneses com scores aplicáveis calculados"
+    ]
+  },
+  "usuarios": {
+    "personas": [
+      {
+        "nome": "Dr. Carlos",
+        "papel": "Médico plantonista",
+        "objetivos": ["agilidade", "precisão", "respaldo jurídico"]
+      },
+      {
+        "nome": "Dra. Ana",
+        "papel": "Coordenadora médica",
+        "objetivos": ["qualidade", "padronização", "indicadores"]
+      }
+    ],
+    "papeis_sistema": ["Medico", "Coordenador", "Administrador"]
+  },
+  "escopo": {
+    "mvp": [
+      "5 síndromes core (Dor torácica, Cefaleia, Dispneia, Dor abdominal, Febre)",
+      "Checklists inteligentes básicos",
+      "Geração de texto estruturada (preview em tempo real)",
+      "3 scores principais (ex.: HEART, CURB-65, qSOFA)",
+      "Web responsivo (PC e smartphone)"
+    ],
+    "fase2": [
+      "20 síndromes",
+      "Medicamentos ANVISA + interações",
+      "Painel administrativo (templates e evidências)",
+      "PWA avançado / App mobile"
+    ],
+    "fase3": [
+      "IA para sugestões contextuais",
+      "Integração HL7 FHIR",
+      "Analytics/dashboards e API pública",
+      "Certificação SBIS/CFM"
+    ]
+  },
+  "modulos": {
+    "dashboard_kanban": {
+      "colunas_padrao": [
+        "Entrada",
+        "Em atendimento",
+        "Aguardando exame",
+        "Reavaliação programada",
+        "Alta/Transferência",
+        "Concluído"
+      ],
+      "recursos": [
+        "Drag & drop (PC) / toque prolongado (mobile)",
+        "Criar tarefa sem PII, vinculada a ID de sessão",
+        "Prazos e alarmes de reavaliação",
+        "Filtros por síndrome/gravidade",
+        "Limite WIP opcional"
+      ]
+    },
+    "artigos_medicos": {
+      "funcoes": [
+        "Upload de PDFs/links",
+        "Classificação por síndrome/score",
+        "Nível de evidência (Oxford CEBM)",
+        "Busca por título/autor/DOI",
+        "Citação automática nas recomendações"
+      ]
+    },
+    "anamnese": {
+      "contextos": ["Pronto-Socorro", "Ambulatório"],
+      "interacao": {
+        "componentes_modernos": [
+          "Checkbox tri-estado (Sim/Não/Não documentado)",
+          "Chips multi-select",
+          "Segmented controls",
+          "Toggles",
+          "Réguas (sliders) 0–10 (EVA, dispneia, náusea)",
+          "Steppers numéricos",
+          "Pickers de duração (há 30min/1h/6h/24h)",
+          "Auto-complete com padrão 'Não documentado'"
+        ]
+      },
+      "preview_texto": {
+        "estilo": "texto corrido, tom de médico exemplar, técnico, claro e juridicamente preciso",
+        "toggle_maiusculas": {
+          "habilitado": true,
+          "padrao_inicial": "desligado",
+          "lembra_preferencia_por": ["usuario", "contexto"],
+          "afeta_copia": true,
+          "nao_altera_texto_canonico": true
+        },
+        "edicao_inline": {
+          "habilitado": true,
+          "padrao_inicial": "desligado",
+          "auditoria": true,
+          "aviso_divergencia_checklist": true
+        },
+        "copia_rapida": {
+          "secoes": ["HDA", "Exame Físico", "HD", "Conduta", "Solicitação de Exames", "Prescrição orientativa", "Tudo"],
+          "formatos": ["texto", "html"],
+          "atalhos_pc": "Ctrl+1..6",
+          "menu_mobile_toque_longo": true
+        }
+      },
+      "estrutura_ps": {
+        "configuracao_geral": {
+          "localizacao": {"pais": "BRASIL", "estado": "SÃO PAULO", "cidade": "PAULÍNIA"},
+          "formato_texto": "MAIÚSCULAS via toggle (visual)",
+          "objetivo": "AUXILIAR MÉDICOS NA EMERGÊNCIA COM DOCUMENTAÇÃO JURIDICAMENTE PROTEGIDA"
+        },
+        "diretrizes_gerais": {
+          "protecao_juridica": "DOCUMENTAÇÃO COMPLETA PARA PROTEÇÃO MÉDICO-LEGAL",
+          "estilo_escrita": "TÉCNICA, SUCINTA E ORTOGRAFICAMENTE CORRETA",
+          "terminologia": {
+            "regra": "TERMOS TÉCNICOS MÉDICOS OBRIGATÓRIOS",
+            "siglas": ["HAS", "DM", "DPOC", "IAM", "AVE", "TEP", "TVP", "FA", "ICC", "IRC"]
+          },
+          "alertas_visuais": {"cor": "VERMELHO", "conteudo": ["INTERAÇÕES MEDICAMENTOSAS", "SCORES DE RISCO", "CONTRAINDICAÇÕES"]}
+        },
+        "regras_geracao_texto": {
+          "formato": "TEXTO CONTÍNUO",
+          "inicio": "IDADE, SEXO, SINTOMA PRINCIPAL, TEMPO DE EVOLUÇÃO",
+          "classificacao_temporal": {"agudo": "<24h", "subagudo": "1–7 dias", "cronico": ">7 dias"},
+          "caracterizacao": ["fatores de melhora/piora", "medicações prévias relevantes", "sintomas associados"],
+          "negativas_importantes": "negar explicitamente sinais de alarme pertinentes",
+          "antecedentes": "comorbidades em siglas",
+          "medicacoes": "apenas as relevantes para o quadro",
+          "alergias": "sempre documentar ou negar",
+          "exame_fisico": {
+            "obrigatorio": ["PA", "FC", "FR", "TAX", "SpO2", "DXT se indicado"],
+            "achados": "pertinentes + negativos relevantes",
+            "formato": "objetivo e técnico"
+          },
+          "hipoteses_diagnosticas": {
+            "quantidade": 3,
+            "formato": "listar diagnósticos; detalhamento no final",
+            "detalhamento_final": {"cid10": true, "justificativa": true, "scores": ["Wells", "CURB-65", "HEART", "Centor"]}
+          },
+          "condutas": {
+            "medicacoes": {
+              "formato": "nome genérico + dose + via + posologia",
+              "alertas_vermelho": ["ajuste renal se TFG <60", "ajuste hepático se Child B/C", "interações principais", "contraindicações absolutas/relativas"]
+            },
+            "orientacoes": {
+              "sinais_alarme": "específicos por diagnóstico",
+              "documentacao_padrao": "PACIENTE ORIENTADO SOBRE SINAIS DE ALARME E RETORNO IMEDIATO SE NECESSÁRIO. VERBALIZOU COMPREENSÃO DAS ORIENTAÇÕES."
+            },
+            "criterios_alta_internacao": "objetivos e baseados em scores"
+          },
+          "observacoes_finais": {
+            "informacoes_faltantes": "sempre identificar e documentar",
+            "atestado": "dias quando indicado",
+            "aviso_legal": "SISTEMA AUXILIAR – NÃO SUBSTITUI JULGAMENTO CLÍNICO MÉDICO"
+          }
+        }
+      }
+    },
+    "evolucao_enfermaria": {
+      "formato": "SOAP",
+      "vinculo_kanban": true
+    },
+    "prescricao_orientativa": {
+      "formato": "texto com nome genérico + dose + via + posologia",
+      "verificacao_interacoes": true,
+      "aviso_legal": true
+    },
+    "solicitacao_exames": {
+      "templates_por_sindrome": true,
+      "justificativa_clinica": true,
+      "prioridade": ["rotina", "urgente"]
+    }
+  },
+  "conteudo_clinico": {
+    "sindromes_iniciais": {
+      "Dor torácica": ["IAM/SCA", "TEP", "Dissecção aórtica", "Pericardite", "Costocondrite", "Ansiedade"],
+      "Cefaleia": ["Enxaqueca", "Tensional", "HSA", "Meningite", "Sinusite"],
+      "Dispneia": ["Asma/DPOC", "Pneumonia", "ICC", "TEP", "Ansiedade"],
+      "Dor abdominal": ["Apendicite", "Colecistite", "Pancreatite", "Úlcera", "Cólica renal"],
+      "Febre": ["Infecção viral", "Pneumonia", "ITU", "Meningite", "Sepse"]
+    },
+    "scores": {
+      "cardiovascular": ["TIMI", "GRACE", "CHA2DS2-VASc", "HEART"],
+      "neurologico": ["NIHSS", "Canadian Head CT", "ABCD2"],
+      "respiratorio": ["CURB-65", "Wells PE", "PSI/PORT"],
+      "geral": ["qSOFA", "SOFA", "NEWS2", "SIRS"]
+    },
+    "protocolos_emergencia": {
+      "via_aerea_dificil": {
+        "sequencia_rapida": [
+          "Pré-oxigenação O2 100% 3–5 min",
+          "Sedação: Etomidato 0,3 mg/kg OU Propofol 1–2 mg/kg",
+          "Bloqueio: Succinilcolina 1–1,5 mg/kg OU Rocurônio 1,2 mg/kg"
+        ]
+      },
+      "sca": ["AAS 300 mg VO", "Clopidogrel 300–600 mg VO", "Enoxaparina 1 mg/kg SC 12/12h", "Morfina 2–4 mg IV se dor"],
+      "acls_ritmo_chocavel": ["Desfibrilação 200J bifásico", "Adrenalina 1 mg IV a cada 3–5 min", "Amiodarona 300 mg IV (1ª) e 150 mg (2ª)"] ,
+      "sepse_bundle_1h": ["Lactato imediato", "Hemoculturas 2 sítios antes do ATB", "ATB de amplo espectro em 1h", "Cristaloide 30 mL/kg se hipotensão ou lactato ≥4", "Noradrenalina se PAM <65 após volume"],
+      "cetoacidose_diabetica": ["SF 0,9% 15–20 mL/kg/h (1ª hora)", "Insulina 0,1 UI/kg bolus + 0,1 UI/kg/h", "Reposição de K se <5,3 mEq/L"],
+      "atls_resumido": ["A: via aérea c/ proteção cervical", "B: ventilação e oxigenação", "C: circulação/controle de hemorragia", "D: déficit neurológico", "E: exposição/controle térmico"]
+    }
+  },
+  "administrativo": {
+    "templates": {"crud": true, "versionamento": true, "aprovacao_comite": true, "auditoria": true},
+    "evidencias": {"upload": true, "citacoes_automaticas": true, "atualizacao_periodica": true, "nivel_evidencia": "Oxford CEBM"}
+  },
+  "requisitos_funcionais": [
+    {"id": "RF-1", "titulo": "Navegação por Síndrome/Queixa Principal", "aceitacao": ["Exibe subitens e obrigatoriedade por síndrome"]},
+    {"id": "RF-2", "titulo": "Checkboxes Inteligentes e Componentes Modernos", "aceitacao": ["Tri-estado padrão 'Não documentado'", "Réguas e chips acessíveis", "Validações cruzadas (gestante×fármaco)"]},
+    {"id": "RF-3", "titulo": "Geração de Texto Médico (Preview em Tempo Real)", "aceitacao": ["Texto coeso com negações pertinentes", "Frases de salvaguarda quando dados faltam", "Toggle MAIÚSCULAS afeta preview e cópia" ]},
+    {"id": "RF-4", "titulo": "Exame Físico com validações", "aceitacao": ["Alertas para valores fora da faixa"]},
+    {"id": "RF-5", "titulo": "Calculadoras e Scores", "aceitacao": ["Resultado com referência bibliográfica"]},
+    {"id": "RF-6", "titulo": "Sistema de Medicamentos + Interações", "aceitacao": ["Classificação de severidade", "Alternativas seguras"]},
+    {"id": "RF-7", "titulo": "Gestão de Templates", "aceitacao": ["Versionamento e aprovação"]},
+    {"id": "RF-8", "titulo": "Gestão de Evidências", "aceitacao": ["Nível de evidência exibido no checklist"]},
+    {"id": "RF-9", "titulo": "Exportação (PDF/Texto/HTML)", "aceitacao": ["PDF sem PII, com hash e metadados"]},
+    {"id": "RF-10", "titulo": "Autenticação e Sessão", "aceitacao": ["MFA/SSO", "Reautenticação sem perda de anamnese"]},
+    {"id": "RF-11", "titulo": "Anonimização, Identificação e Retenção", "aceitacao": ["Zero PII", "Campo celular opcional com modos seguros", "Expiração 24h"]},
+    {"id": "RF-12", "titulo": "Acessibilidade e Dark Mode", "aceitacao": ["WCAG 2.1 AA", "Navegação por teclado"]},
+    {"id": "RF-13", "titulo": "Atalhos e Produtividade", "aceitacao": ["Atalhos PC", "Gestos mobile"]},
+    {"id": "RF-14", "titulo": "Alertas de Segurança Clínica (Vermelho)", "aceitacao": ["Interações, scores altos, contraindicações"]},
+    {"id": "RF-15", "titulo": "Dashboard & Kanban do Plantão", "aceitacao": ["Drag & drop sem PII", "Alarmes de reavaliação"]},
+    {"id": "RF-16", "titulo": "Sessão de Artigos Médicos", "aceitacao": ["Vincular evidência ao checklist"]},
+    {"id": "RF-17", "titulo": "Contextos de Anamnese: PS e Ambulatório", "aceitacao": ["Tom e campos adaptados ao contexto"]},
+    {"id": "RF-18", "titulo": "Evolução de Enfermaria (SOAP)", "aceitacao": ["Exporta com horário/autor/ID sessão/hash"]},
+    {"id": "RF-19", "titulo": "Prescrição Orientativa", "aceitacao": ["Aviso legal automático", "Sem PII"]},
+    {"id": "RF-20", "titulo": "Solicitação de Exames", "aceitacao": ["Justificativa clínica e prioridade"]},
+    {"id": "RF-21", "titulo": "Preview – Estilo Médico Exemplar", "aceitacao": ["Texto fluido e preciso juridicamente"]},
+    {"id": "RF-22", "titulo": "Salvaguardas Jurídicas Automáticas", "aceitacao": ["Fallbacks quando dados faltam"]},
+    {"id": "RF-23", "titulo": "Conformidade de Não Identificação", "aceitacao": ["Bloqueio de PII em campos livres"]},
+    {"id": "RF-24", "titulo": "Réguas e Componentes Sem Digitação (Detalhes)", "aceitacao": ["Acessíveis por teclado e touch"]},
+    {"id": "RF-25", "titulo": "Edição do Preview e Cópia por Seções", "aceitacao": ["Auditoria de edições", "Cópia 1-clique por seção"]},
+    {"id": "RF-26", "titulo": "Estrutura de Anamnese – Pronto-Socorro", "aceitacao": ["Ordem e conteúdo conforme regras PS", "3 hipóteses + CID-10 + scores no final"]},
+    {"id": "RF-27", "titulo": "Protocolos de Emergência (Templates)", "aceitacao": ["Cálculo de dose por peso", "Alertas em vermelho"]}
+  ],
+  "requisitos_nao_funcionais": {
+    "desempenho": {"lcp_seg": 2.5, "fid_ms": 100, "operacoes_cliente_ms": 300},
+    "confiabilidade": {"slo_uptime_mensal": "99.9%", "rpo_min": 15, "rto_min": 60},
+    "seguranca": ["TLS 1.3", "AES-256 em repouso", "CSP", "HSTS", "rate limiting"],
+    "privacidade": ["LGPD/HIPAA-ready", "DPIA", "logs sem PII"],
+    "compatibilidade": ["Chrome/Edge (2 últimas)", "Safari iOS (2 últimas)", "Android WebView compatível"],
+    "observabilidade": ["logs estruturados", "métricas p95", "tracing distribuído"],
+    "usabilidade": ["≤3 cliques para iniciar anamnese", "1-mão no mobile", "teclado no desktop", "zero digitação obrigatória" ]
+  },
+  "arquitetura_tecnica": {
+    "frontend": ["Next.js 14", "TypeScript", "React 18 RSC", "Tailwind + shadcn/ui", "Zustand", "React Hook Form + Zod", "Vitest + RTL"],
+    "backend": ["Node.js + TypeScript", "NestJS", "PostgreSQL + Prisma", "Redis", "Bull (filas)", "Jest"],
+    "infra": ["Docker + Kubernetes", "AWS EKS/GCP GKE", "CloudFront", "S3", "RDS PostgreSQL", "ElastiCache Redis"]
+  },
+  "seguranca_compliance": {
+    "anonimizacao": {
+      "zero_pii": true,
+      "ids_temporarios": true,
+      "expiracao_horas": 24,
+      "logs_sem_sensivel": true
+    },
+    "celular_paciente_opcional": {
+      "modos": ["local_only", "servidor_24h", "desabilitado"],
+      "padrao": "local_only",
+      "mascara_visual": true,
+      "exportacoes_incluem": false,
+      "acesso_auditado": true
+    },
+    "lgpd_hipaa": ["criptografia", "TLS 1.3", "audit trail", "políticas de retenção"],
+    "byod": ["proibir cache de PII", "minimizar cache PWA", "bloqueios de screenshot apenas em app nativo (futuro)"]
+  },
+  "ux": {
+    "principios": ["Mobile-first", "Dark mode", "WCAG 2.1 AA", "Performance"],
+    "pc_layout": {"colunas": ["Navegação", "Checklist", "Preview/Scores"], "atalhos": ["N (nova anamnese)", "Ctrl+C (copiar texto)"]},
+    "mobile_layout": {"etapas": true, "barra_progresso": true, "botao_preview": "flutuante"},
+    "componentes_sem_digitacao": ["chips", "toggles", "segmented controls", "sliders", "steppers", "pickers duração"],
+    "preview": {"toggle_maiusculas": true, "edicao_inline": true, "copiar_por_secao": true}
+  },
+  "modelagem_dados": {
+    "entidades": [
+      {"User": ["id", "nome", "email", "papel", "mfa_enabled"]},
+      {"Session": ["id", "user_id", "created_at", "expires_at"]},
+      {"Anamnesis": ["id", "session_id", "syndrome", "payload_json", "created_at", "status"]},
+      {"Template": ["id", "syndrome", "version", "schema_json", "is_active"]},
+      {"Evidence": ["id", "title", "source", "level", "link", "version", "attached_by"]},
+      {"ScoreResult": ["id", "anamnesis_id", "score_type", "input_json", "result", "timestamp"]},
+      {"Medication": ["id", "name", "route", "dose_std", "adjustments_json"]},
+      {"InteractionRule": ["id", "rule_json", "severity", "alternatives_json"]},
+      {"AuditEvent": ["id", "actor_id", "action", "entity", "entity_id", "timestamp", "hash"]},
+      {"BoardColumn": ["id", "name", "wip_limit", "order"]},
+      {"Task": ["id", "session_id", "title", "label", "priority", "due_at", "column_id", "created_at", "updated_at"]},
+      {"Article": ["id", "title", "authors", "source", "doi", "url", "evidence_level", "tags"]},
+      {"Evolucao": ["id", "session_id", "soap_json", "author_id", "created_at"]},
+      {"PrescriptionDraft": ["id", "session_id", "items_json", "adjustments_json", "created_at"]},
+      {"ExamRequest": ["id", "session_id", "exams_json", "justification", "priority", "created_at"]},
+      {"StyleConfig": ["id", "context", "uppercase_preview", "copy_default_case"]},
+      {"ProtocolTemplate": ["id", "name", "steps_json", "dosing_rules_json", "contraindications_json"]},
+      {"UserPreference": ["id", "user_id", "context", "uppercase_preview_default", "copy_default_case"]}
+    ]
+  },
+  "analytics_telemetria": {
+    "eventos": [
+      "dashboard_viewed",
+      "kanban_task_created",
+      "kanban_task_moved",
+      "anamnesis_started",
+      "field_completed",
+      "score_calculated",
+      "text_copied",
+      "export_pdf",
+      "interaction_alert_shown",
+      "evolucao_saved",
+      "prescription_generated",
+      "exam_request_created"
+    ],
+    "dashboards": [
+      "taxa de completude",
+      "tempo médio",
+      "adesão a protocolos por síndrome",
+      "alertas clínicos",
+      "volume por módulo",
+      "SLA reavaliações"
+    ]
+  },
+  "testes_qualidade": {
+    "unitario": ">=80% regras clínicas",
+    "integracao": ["conversão checkbox→texto", "validações cruzadas"],
+    "e2e": ["edição do preview (off por padrão)", "toggle MAIÚSCULAS", "cópia por seção (Texto/HTML)", "acessibilidade de sliders", "atalhos de teclado"],
+    "seguranca": ["SAST", "DAST", "OWASP Top 10", "RBAC"],
+    "a11y": ["WCAG 2.1 AA"]
+  },
+  "roadmap": {
+    "mvp_3m": ["5 síndromes", "checklists básicos", "texto", "3 scores", "responsivo"],
+    "fase2_6m": ["20 síndromes", "ANVISA+interações", "admin", "PWA/app"],
+    "fase3_9m": ["IA contextual", "FHIR", "dashboards", "API pública", "certificações"]
+  },
+  "modelo_negocio": {
+    "monetizacao": {"freemium": "5 anamneses/dia", "pro": "R$99/mês", "enterprise": "custom"},
+    "projecoes": {
+      "ano1": {"pro": 1000},
+      "ano2": {"pro": 5000, "enterprise": 10},
+      "ano3": {"pro": 15000, "enterprise": 50}
+    }
+  },
+  "riscos": [
+    "Resistência à adoção",
+    "Responsabilidade legal",
+    "Atualização de evidências",
+    "Concorrência",
+    "BYOD (segurança)",
+    "Licenciamento de bases clínicas"
+  ],
+  "questoes_em_aberto": [
+    "Percentual PC vs smartphone no plantão",
+    "Política BYOD (MDM/MFA, clipboard, screenshot)",
+    "Offline parcial no smartphone (schemas vs dados)",
+    "Autenticação MVP (Email+MFA vs SSO)",
+    "Fornecedor de interações medicamentosas",
+    "Idiomas e i18n",
+    "Exportações exigidas (PDF, CDA, FHIR)"
+  ],
+  "defaults": {
+    "toggle_maiusculas_padrao": "desligado",
+    "edicao_preview_padrao": "desligado",
+    "celular_paciente_modo": "local_only"
+  }
+}
