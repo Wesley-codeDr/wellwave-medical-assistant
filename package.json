@@ -1,7 +1,24 @@
 {
-  "name": "meu-app",
-  "version": "0.1.0",
+  "name": "wellwave-medical-assistant",
+  "version": "1.0.0",
+  "description": "Sistema médico avançado para geração automática de anamneses em ambientes de pronto-socorro",
   "private": true,
+  "author": "Wesley-codeDr",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Wesley-codeDr/wellwave-medical-assistant.git"
+  },
+  "keywords": [
+    "medical",
+    "anamnese",
+    "emergency",
+    "nextjs",
+    "typescript",
+    "shadcn-ui",
+    "cfm-compliant",
+    "lgpd-ready"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",

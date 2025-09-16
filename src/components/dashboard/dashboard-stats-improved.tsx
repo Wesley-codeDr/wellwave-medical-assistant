@@ -54,7 +54,7 @@ export function DashboardStats({ columns }: DashboardStatsProps) {
     },
     {
       title: "Taxa de Conclusão",
-      value: `${Math.round((stats.completedTasks / stats.totalTasks) * 100)}%`,
+      value: `${Math.round((stats.columns.find(c => c.id === 'concluido')?.count || 0 / stats.totalTasks) * 100)}%`,
       subtitle: "Casos finalizados hoje",
       icon: CheckCircle,
       color: "green",
@@ -192,7 +192,7 @@ export function DashboardStats({ columns }: DashboardStatsProps) {
           <CardHeader className="pb-4">
             <CardTitle className="flex items-center gap-3 text-lg font-bold text-slate-900">
               <div className="p-2 rounded-lg bg-blue-500/10">
-                <Pulse className="h-5 w-5 text-blue-600" />
+                <Activity className="h-5 w-5 text-blue-600" />
               </div>
               Fluxo de Atendimento
             </CardTitle>
@@ -252,155 +252,6 @@ export function DashboardStats({ columns }: DashboardStatsProps) {
           </div>
         </CardContent>
       </Card>
-    </>
-  );
-}
-            </div>
-            <p className="text-xs text-red-600/80 dark:text-red-400/80 font-medium">
-              Requerem atenção imediata
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Tarefas em Atendimento */}
-        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-950/50 dark:to-orange-950/50 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full -translate-y-10 translate-x-10"></div>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-semibold text-amber-700 dark:text-amber-300">
-              Em Atendimento
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-amber-500/10">
-              <Clock className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-            </div>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-amber-900 dark:text-amber-100 mb-1">
-              {stats.columns.find(col => col.id === 'em_atendimento')?.count || 0}
-            </div>
-            <p className="text-xs text-amber-600/80 dark:text-amber-400/80 font-medium">
-              Sendo atendidas agora
-            </p>
-          </CardContent>
-        </Card>
-
-        {/* Taxa de Conclusão */}
-        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-950/50 dark:to-emerald-950/50 shadow-lg hover:shadow-xl transition-all duration-300">
-          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-green-500/20 to-emerald-500/20 rounded-full -translate-y-10 translate-x-10"></div>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 relative z-10">
-            <CardTitle className="text-sm font-semibold text-green-700 dark:text-green-300">
-              Taxa de Conclusão
-            </CardTitle>
-            <div className="p-2 rounded-lg bg-green-500/10">
-              <TrendingUp className="h-4 w-4 text-green-600 dark:text-green-400" />
-            </div>
-          </CardHeader>
-          <CardContent className="relative z-10">
-            <div className="text-3xl font-bold text-green-900 dark:text-green-100 mb-1">
-              {stats.totalTasks > 0 
-                ? Math.round(((stats.columns.find(col => col.id === 'concluido')?.count || 0) / stats.totalTasks) * 100)
-                : 0}%
-            </div>
-            <p className="text-xs text-green-600/80 dark:text-green-400/80 font-medium">
-              Tarefas finalizadas
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Distribuição por Prioridade */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-      <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-primary/10">
-              <Activity className="h-4 w-4 text-primary" />
-            </div>
-            Distribuição por Prioridade
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {Object.entries(stats.tasksByPriority).map(([priority, count]) => (
-              <div key={priority} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors duration-200">
-                <div className="flex items-center gap-3">
-                  <Badge className={`${getPriorityColor(priority)} capitalize font-semibold px-3 py-1`}>
-                    {priority}
-                  </Badge>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-foreground min-w-[2rem] text-right">{count}</span>
-                  <Progress 
-                    value={getColumnProgress(count, stats.totalTasks)} 
-                    className="w-24 h-2"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Distribuição por Síndrome */}
-      <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
-        <CardHeader className="pb-4">
-          <CardTitle className="text-lg font-semibold flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-secondary/10">
-              <Heart className="h-4 w-4 text-secondary-foreground" />
-            </div>
-            Distribuição por Síndrome
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {Object.entries(stats.tasksBySyndrome).map(([syndrome, count]) => (
-              <div key={syndrome} className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors duration-200">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-primary/10">
-                    {getSyndromeIcon(syndrome)}
-                  </div>
-                  <span className="text-sm font-semibold">{syndrome}</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-foreground min-w-[2rem] text-right">{count}</span>
-                  <Progress 
-                    value={getColumnProgress(count, stats.totalTasks)} 
-                    className="w-24 h-2"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-
-    {/* Status das Colunas */}
-    <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
-      <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-accent/10">
-            <BarChart3 className="h-4 w-4 text-accent-foreground" />
-          </div>
-          Status das Colunas
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {stats.columns.map((column) => (
-            <div key={column.id} className="text-center p-4 rounded-lg bg-muted/30 hover:bg-muted/50 transition-all duration-200 hover:scale-105">
-              <div className="text-3xl font-bold mb-2 text-primary">{column.count}</div>
-              <div className="text-sm font-semibold text-foreground mb-3">
-                {column.title}
-              </div>
-              <Progress 
-                value={getColumnProgress(column.count, stats.totalTasks)} 
-                className="h-3"
-              />
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
     </>
   );
 }
