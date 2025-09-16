@@ -1,0 +1,81 @@
+# 🔄 Dependabot Configuration for WellWave
+# Mantém dependências atualizadas com foco em segurança médica
+
+version: 2
+
+updates:
+  # Package ecosystem: npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+
+    # Grupos de dependências para facilitar review
+    groups:
+      # Framework principais (Next.js, React)
+      framework:
+        patterns:
+          - "next*"
+          - "react*"
+          - "@types/react*"
+
+      # UI e Design System
+      ui-components:
+        patterns:
+          - "@radix-ui/*"
+          - "tailwindcss*"
+          - "lucide-react"
+          - "class-variance-authority"
+          - "clsx"
+          - "tailwind-merge"
+
+      # Desenvolvimento e Build
+      dev-tools:
+        patterns:
+          - "typescript"
+          - "eslint*"
+          - "prettier*"
+          - "@types/*"
+
+      # Segurança (alta prioridade para sistema médico)
+      security:
+        patterns:
+          - "*security*"
+          - "*auth*"
+          - "*encrypt*"
+          - "*sanitiz*"
+
+    # Labels customizadas
+    labels:
+      - "dependencies"
+      - "automated"
+
+    # Reviewers para dependências críticas
+    reviewers:
+      - "wesley-codedr"
+
+    # Commit message customizada
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "10:00"
+    open-pull-requests-limit: 3
+
+    labels:
+      - "github-actions"
+      - "dependencies"
+
+    commit-message:
+      prefix: "ci"
+      include: "scope"

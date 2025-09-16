@@ -1,0 +1,181 @@
+# 🏷️ Labels Configuration for WellWave Repository
+
+# 🚨 Priority Labels
+- name: "priority-critical"
+  color: "b60205"
+  description: "🚨 Critical issue affecting medical operations"
+
+- name: "priority-high"
+  color: "d93f0b"
+  description: "🔴 High priority - affects core medical functionality"
+
+- name: "priority-medium"
+  color: "fbca04"
+  description: "🟡 Medium priority - important but not blocking"
+
+- name: "priority-low"
+  color: "0e8a16"
+  description: "🟢 Low priority - nice to have"
+
+# 🏥 Medical & Compliance Labels
+- name: "medical-compliance"
+  color: "1f77b4"
+  description: "⚕️ Related to CFM/LGPD compliance"
+
+- name: "cfm-requirement"
+  color: "2e5c8a"
+  description: "📋 CFM (Conselho Federal de Medicina) requirement"
+
+- name: "lgpd-requirement"
+  color: "17a2b8"
+  description: "🔒 LGPD (Lei Geral de Proteção de Dados) requirement"
+
+- name: "medical-review"
+  color: "6f42c1"
+  description: "👩‍⚕️ Requires review by medical professional"
+
+- name: "emergency-medicine"
+  color: "dc3545"
+  description: "🚑 Related to emergency medicine workflow"
+
+# 🐛 Bug Labels
+- name: "bug"
+  color: "d73a49"
+  description: "🐛 Something isn't working"
+
+- name: "critical-bug"
+  color: "b60205"
+  description: "💥 Critical bug affecting system stability"
+
+- name: "regression"
+  color: "d93f0b"
+  description: "↩️ Regression from previous version"
+
+# ✨ Enhancement Labels
+- name: "enhancement"
+  color: "a2eeef"
+  description: "✨ New feature or improvement"
+
+- name: "ui-improvement"
+  color: "7057ff"
+  description: "🎨 User interface improvement"
+
+- name: "ux-improvement"
+  color: "8b5cf6"
+  description: "👤 User experience improvement"
+
+- name: "performance"
+  color: "f9c23c"
+  description: "⚡ Performance improvement"
+
+# 📚 Documentation Labels
+- name: "documentation"
+  color: "0075ca"
+  description: "📚 Documentation improvement"
+
+- name: "medical-docs"
+  color: "1e6091"
+  description: "📋 Medical documentation update"
+
+# 🔧 Technical Labels
+- name: "refactor"
+  color: "fef2c0"
+  description: "♻️ Code refactoring"
+
+- name: "dependencies"
+  color: "0366d6"
+  description: "📦 Dependency update"
+
+- name: "security"
+  color: "ee0701"
+  description: "🛡️ Security related"
+
+- name: "accessibility"
+  color: "7f0799"
+  description: "♿ Accessibility improvement"
+
+# 🧪 Testing Labels
+- name: "testing"
+  color: "c5def5"
+  description: "🧪 Testing related"
+
+- name: "e2e-tests"
+  color: "b0d4f1"
+  description: "🔄 End-to-end testing"
+
+- name: "medical-testing"
+  color: "a8dadc"
+  description: "⚕️ Medical workflow testing"
+
+# 🎯 Component Labels
+- name: "component:anamnesis"
+  color: "ff6b6b"
+  description: "📋 Anamnesis component"
+
+- name: "component:dashboard"
+  color: "4ecdc4"
+  description: "📊 Dashboard component"
+
+- name: "component:kanban"
+  color: "45b7d1"
+  description: "📋 Kanban board component"
+
+- name: "component:auth"
+  color: "96ceb4"
+  description: "🔐 Authentication component"
+
+# 🚀 Release Labels
+- name: "breaking-change"
+  color: "d93f0b"
+  description: "💥 Breaking change"
+
+- name: "needs-release-notes"
+  color: "ffcc5c"
+  description: "📝 Needs release notes"
+
+# 🔄 Workflow Labels
+- name: "needs-triage"
+  color: "ffd700"
+  description: "🏷️ Needs to be triaged"
+
+- name: "needs-review"
+  color: "fbca04"
+  description: "👀 Needs code review"
+
+- name: "ready-for-testing"
+  color: "0e8a16"
+  description: "✅ Ready for testing"
+
+- name: "work-in-progress"
+  color: "d4c5f9"
+  description: "🚧 Work in progress"
+
+- name: "blocked"
+  color: "b60205"
+  description: "🚫 Blocked by external dependency"
+
+# 🤖 Automation Labels
+- name: "automated"
+  color: "ededed"
+  description: "🤖 Created by automation"
+
+- name: "good-first-issue"
+  color: "7057ff"
+  description: "👋 Good for newcomers"
+
+- name: "help-wanted"
+  color: "008672"
+  description: "🙋 Help wanted"
+
+# 📱 Platform Labels
+- name: "mobile"
+  color: "ff9f1c"
+  description: "📱 Mobile specific"
+
+- name: "desktop"
+  color: "6c5ce7"
+  description: "💻 Desktop specific"
+
+- name: "cross-platform"
+  color: "2d3436"
+  description: "🌐 Cross-platform issue"

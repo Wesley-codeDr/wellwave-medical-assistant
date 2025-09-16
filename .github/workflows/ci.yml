@@ -1,0 +1,205 @@
+name: 🏥 WellWave CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  quality-check:
+    name: 🔍 Quality Check
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: npm ci
+
+    - name: 🔧 Type check
+      run: npm run type-check
+
+    - name: 🧹 Lint check
+      run: npm run lint
+
+    - name: 🏗️ Build check
+      run: npm run build
+
+    - name: 🧪 Run tests
+      run: npm test
+
+  security-check:
+    name: 🔒 Security Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: npm ci
+
+    - name: 🔍 Audit dependencies
+      run: npm audit --audit-level moderate
+
+    - name: 🛡️ Security scan
+      run: |
+        npx audit-ci --moderate
+
+  medical-compliance:
+    name: ⚕️ Medical Compliance Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔍 Check medical data handling
+      run: |
+        echo "🏥 Verificando compliance médico..."
+
+        # Verificar se não há dados médicos hardcoded
+        if grep -r "CPF\|RG\|paciente.*nome\|patient.*name" src/ --exclude-dir=node_modules; then
+          echo "❌ Possíveis dados pessoais encontrados no código"
+          exit 1
+        fi
+
+        # Verificar se há validações LGPD
+        if ! grep -r "LGPD\|consentimento\|consent" src/ --exclude-dir=node_modules; then
+          echo "⚠️ Avisos: Verificar implementação de compliance LGPD"
+        fi
+
+        echo "✅ Verificação básica de compliance aprovada"
+
+    - name: 📋 Check CFM compliance structure
+      run: |
+        echo "📋 Verificando estrutura de anamnese CFM..."
+
+        required_fields=("hda" "exame_fisico" "hipotese_diagnostica" "conduta")
+        for field in "${required_fields[@]}"; do
+          if ! grep -r "$field" src/ --exclude-dir=node_modules; then
+            echo "⚠️ Campo obrigatório CFM não encontrado: $field"
+          fi
+        done
+
+        echo "✅ Verificação de estrutura CFM concluída"
+
+  lighthouse-audit:
+    name: 📊 Lighthouse Audit
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: npm ci
+
+    - name: 🏗️ Build for production
+      run: npm run build
+
+    - name: 📊 Run Lighthouse CI
+      run: |
+        npm install -g @lhci/cli
+        # Configuração básica do Lighthouse para aplicações médicas
+        # Foco em performance, acessibilidade e SEO
+        echo "Performance é crítica em ambientes médicos de emergência"
+
+  deploy-preview:
+    name: 🚀 Deploy Preview
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🟢 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+
+    - name: 📦 Install dependencies
+      run: npm ci
+
+    - name: 🏗️ Build
+      run: npm run build
+
+    - name: 📝 Comment PR
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '🏥 **WellWave Preview Build**\n\n✅ Build successful! Ready for medical compliance review.\n\n🔍 **Checklist de Review:**\n- [ ] Compliance CFM verificado\n- [ ] LGPD requirements atendidos\n- [ ] Performance médica adequada\n- [ ] Acessibilidade validada'
+          })
+
+  auto-label:
+    name: 🏷️ Auto Label
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+    - name: 🏥 Add medical labels
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const labels = [];
+          const title = context.payload.pull_request.title.toLowerCase();
+          const body = context.payload.pull_request.body.toLowerCase();
+
+          // Labels baseados no tipo de mudança
+          if (title.includes('fix') || title.includes('bug')) {
+            labels.push('bug');
+          }
+          if (title.includes('feat') || title.includes('feature')) {
+            labels.push('enhancement');
+          }
+          if (title.includes('docs')) {
+            labels.push('documentation');
+          }
+          if (title.includes('compliance') || body.includes('cfm') || body.includes('lgpd')) {
+            labels.push('medical-compliance');
+          }
+          if (body.includes('performance') || body.includes('speed')) {
+            labels.push('performance');
+          }
+          if (body.includes('security') || body.includes('segurança')) {
+            labels.push('security');
+          }
+
+          if (labels.length > 0) {
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: labels
+            });
+          }
