@@ -58,37 +58,42 @@ export function AppSidebar({ children }: AppSidebarProps) {
 
   const menuItems = [
     {
-      title: 'Dashboard',
+      title: 'Central Médica',
       url: '/dashboard',
-      icon: Kanban,
+      icon: Stethoscope,
       badge: '6',
-      isActive: currentPage === 'dashboard'
+      isActive: currentPage === 'dashboard',
+      description: 'Painel de controle'
     },
     {
-      title: 'Anamnese',
+      title: 'Anamnese Digital',
       url: '/anamnese',
       icon: FileText,
       badge: '3',
-      isActive: currentPage === 'anamnese'
+      isActive: currentPage === 'anamnese',
+      description: 'Coleta de dados clínicos'
     },
     {
-      title: 'Pacientes',
+      title: 'Gestão de Pacientes',
       url: '/pacientes',
       icon: Users,
       badge: '12',
-      isActive: currentPage === 'pacientes'
+      isActive: currentPage === 'pacientes',
+      description: 'Cadastro e acompanhamento'
     },
     {
-      title: 'Analytics',
+      title: 'Analytics Clínicos',
       url: '/analytics',
       icon: BarChart3,
-      isActive: currentPage === 'analytics'
+      isActive: currentPage === 'analytics',
+      description: 'Relatórios e insights'
     },
     {
       title: 'Configurações',
       url: '/configuracoes',
       icon: Settings,
-      isActive: currentPage === 'configuracoes'
+      isActive: currentPage === 'configuracoes',
+      description: 'Preferências do sistema'
     }
   ];
 

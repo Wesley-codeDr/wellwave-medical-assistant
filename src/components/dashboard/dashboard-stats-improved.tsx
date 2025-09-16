@@ -201,7 +201,7 @@ export function DashboardStats({ columns }: DashboardStatsProps) {
             {columns.map((column) => (
               <div key={column.id} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${column.color}`} />
+                  <div className={`w-3 h-3 rounded-full bg-blue-500`} />
                   <span className="text-sm font-medium text-slate-700 capitalize">
                     {column.title}
                   </span>
@@ -233,19 +233,19 @@ export function DashboardStats({ columns }: DashboardStatsProps) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(stats.syndromeFrequency).map(([syndrome, count]) => (
+            {Object.entries(stats.tasksBySyndrome).map(([syndrome, count]) => (
               <div key={syndrome} className="group p-4 rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 hover:from-blue-50 hover:to-blue-100 transition-all duration-300 border border-slate-200 hover:border-blue-200">
                 <div className="flex items-center justify-between mb-3">
                   <div className="p-2 rounded-lg bg-white shadow-sm group-hover:bg-blue-50 transition-colors duration-300">
                     {getSyndromeIcon(syndrome)}
                   </div>
                   <Badge variant="secondary" className="text-xs font-bold bg-white/80">
-                    {count}
+                    {count as number}
                   </Badge>
                 </div>
                 <h4 className="text-sm font-semibold text-slate-900 mb-1">{syndrome}</h4>
                 <p className="text-xs text-slate-600">
-                  {Math.round((count / stats.totalTasks) * 100)}% dos casos
+                  {Math.round(((count as number) / stats.totalTasks) * 100)}% dos casos
                 </p>
               </div>
             ))}

@@ -21,7 +21,7 @@ import {
   User
 } from 'lucide-react';
 import { KanbanBoard } from './kanban-board';
-import { DashboardStats } from './dashboard-stats';
+import { DashboardStats } from './dashboard-stats-improved';
 import { NewTaskModal } from './new-task-modal';
 import { AppSidebar } from './app-sidebar';
 import { getInitialColumns, Column, Task } from '@/lib/mock-data';
