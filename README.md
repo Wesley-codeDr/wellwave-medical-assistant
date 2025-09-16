@@ -1,6 +1,6 @@
-# 🏥 Sistema de Anamnese Digital
+# 🏥 WellWave - Sistema Médico Avançado
 
-Sistema auxiliar para documentação médica no Pronto-Socorro, desenvolvido com Next.js e shadcn/ui.
+Sistema médico avançado para geração automática de anamneses em ambientes de pronto-socorro. Transforma checkboxes simples em documentação clínica completa, juridicamente robusta e 100% compatível com CFM/LGPD.
 
 ## ✨ Funcionalidades
 
@@ -48,10 +48,10 @@ Sistema auxiliar para documentação médica no Pronto-Socorro, desenvolvido com
 
 ```bash
 # Clone o repositório
-git clone https://github.com/wesleywillian/sistema-anamnese-digital.git
+git clone https://github.com/Wesley-codeDr/wellwave-medical-assistant.git
 
 # Entre no diretório
-cd sistema-anamnese-digital
+cd wellwave-medical-assistant
 
 # Instale as dependências
 npm install
@@ -124,4 +124,10 @@ Para suporte ou dúvidas, entre em contato através das issues do GitHub.
 
 ---
 
-Desenvolvido com ❤️ para melhorar a documentação médica no Pronto-Socorro.
+**WellWave** - Desenvolvido com ❤️ para revolucionar a documentação médica em ambientes de emergência.
+
+![GitHub](https://img.shields.io/badge/GitHub-Wesley--codeDr%2Fwellwave--medical--assistant-blue)
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![CFM Compliant](https://img.shields.io/badge/CFM-Compliant-green)
+![LGPD Ready](https://img.shields.io/badge/LGPD-Ready-green)
