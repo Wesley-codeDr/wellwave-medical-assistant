@@ -1,12 +1,12 @@
 "use client"
 
-import { AppSidebar } from "@/components/dashboard/app-sidebar"
-import { AppRouter } from "@/components/routing/app-router"
+import { MedicalSidebar } from "@/components/layout/medical-sidebar"
+import { AppRouter } from "@/components/routing/app-router-fixed"
 
 export default function Home() {
   return (
-    <AppSidebar>
+    <MedicalSidebar>
       <AppRouter />
-    </AppSidebar>
+    </MedicalSidebar>
   );
 }

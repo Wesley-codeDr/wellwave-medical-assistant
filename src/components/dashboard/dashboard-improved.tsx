@@ -23,7 +23,6 @@ import {
 import { KanbanBoard } from './kanban-board';
 import { DashboardStats } from './dashboard-stats-improved';
 import { NewTaskModal } from './new-task-modal';
-import { AppSidebar } from './app-sidebar';
 import { getInitialColumns, Column, Task } from '@/lib/mock-data';
 
 export function Dashboard() {
@@ -52,8 +51,7 @@ export function Dashboard() {
       change: "+12%",
       icon: Users,
       trend: "up",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "blue",
       description: "Pacientes em acompanhamento"
     },
     {
@@ -62,8 +60,7 @@ export function Dashboard() {
       change: "+8%",
       icon: ClipboardList,
       trend: "up",
-      color: "text-emerald-600",
-      bgColor: "bg-emerald-50",
+      color: "green",
       description: "Realizadas nas últimas 24h"
     },
     {
@@ -72,8 +69,7 @@ export function Dashboard() {
       change: "-2",
       icon: AlertTriangle,
       trend: "down",
-      color: "text-red-600",
-      bgColor: "bg-red-50",
+      color: "red",
       description: "Necessitam atenção imediata"
     },
     {
@@ -82,8 +78,7 @@ export function Dashboard() {
       change: "+2.1%",
       icon: CheckCircle,
       trend: "up",
-      color: "text-green-600",
-      bgColor: "bg-green-50",
+      color: "green",
       description: "Casos resolvidos este mês"
     }
   ];
@@ -114,10 +109,9 @@ export function Dashboard() {
                 Sistema Ativo
               </Badge>
               <NewTaskModal onTaskCreate={handleCreateTask}>
-                <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-300 px-6">
-                  <Plus className="h-4 w-4 mr-2" />
+                <MedicalButton icon={Plus} variant="primary">
                   Nova Anamnese
-                </Button>
+                </MedicalButton>
               </NewTaskModal>
             </div>
           </div>
@@ -175,86 +169,69 @@ export function Dashboard() {
             <DashboardStats columns={columns} />
             
             {/* Board Kanban Médico */}
-            <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 bg-white/90 backdrop-blur-sm overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-green-50/30 pointer-events-none" />
-              <CardHeader className="pb-6 relative">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <CardTitle className="flex items-center gap-3 text-xl font-bold text-slate-900">
-                    <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
-                      <ClipboardList className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <span>Fluxo de Atendimento</span>
-                      <p className="text-sm font-normal text-slate-600 mt-1">
-                        Gestão visual de pacientes e procedimentos
-                      </p>
-                    </div>
-                  </CardTitle>
-                  <div className="flex items-center gap-3 w-full sm:w-auto">
-                    <Badge variant="outline" className="text-xs border-blue-200 text-blue-700 bg-blue-50/80">
-                      <User className="h-3 w-3 mr-1" />
-                      {columns.reduce((sum, col) => sum + col.tasks.length, 0)} pacientes
-                    </Badge>
-                    <Badge variant="outline" className="text-xs border-green-200 text-green-700 bg-green-50/80">
-                      <Clock className="h-3 w-3 mr-1" />
-                      Tempo real
-                    </Badge>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="relative">
-                <KanbanBoard 
-                  onTaskClick={handleTaskClick}
-                  onCreateTask={() => {}}
-                />
-              </CardContent>
-            </Card>
+            <MedicalCard
+              title="Fluxo de Atendimento"
+              subtitle="Gestão visual de pacientes e procedimentos"
+              icon={ClipboardList}
+              variant="gradient"
+              className="overflow-hidden"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Badge variant="outline" className="text-xs border-blue-200 text-blue-700 bg-blue-50/80">
+                  <User className="h-3 w-3 mr-1" />
+                  {columns.reduce((sum, col) => sum + col.tasks.length, 0)} pacientes
+                </Badge>
+                <Badge variant="outline" className="text-xs border-green-200 text-green-700 bg-green-50/80">
+                  <Clock className="h-3 w-3 mr-1" />
+                  Tempo real
+                </Badge>
+              </div>
+              <KanbanBoard 
+                onTaskClick={handleTaskClick}
+                onCreateTask={() => {}}
+              />
+            </MedicalCard>
           </TabsContent>
 
           <TabsContent value="analytics" className="space-y-6">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-                  <div className="p-2 rounded-lg bg-secondary/10">
-                    <BarChart3 className="h-5 w-5 text-secondary-foreground" />
-                  </div>
-                  Analytics e Relatórios
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12 text-muted-foreground">
-                  <div className="p-4 rounded-full bg-muted/30 w-fit mx-auto mb-4">
-                    <BarChart3 className="h-12 w-12 opacity-50" />
-                  </div>
-                  <p className="text-lg font-medium mb-2">Analytics em desenvolvimento</p>
-                  <p className="text-sm">Esta seção será implementada na Fase 3 do projeto</p>
-                </div>
-              </CardContent>
-            </Card>
+            <MedicalCard
+              title="Analytics Médicos"
+              subtitle="Relatórios e insights clínicos"
+              icon={BarChart3}
+              variant="elevated"
+            >
+              <div className="text-center py-12">
+                <BarChart3 className="h-16 w-16 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-700 mb-2">
+                  Analytics em Desenvolvimento
+                </h3>
+                <p className="text-slate-500">
+                  Relatórios detalhados e insights médicos estarão disponíveis em breve.
+                </p>
+              </div>
+            </MedicalCard>
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-6">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-muted/20">
-              <CardHeader className="pb-4">
-                <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-                  <div className="p-2 rounded-lg bg-accent/10">
-                    <Settings className="h-5 w-5 text-accent-foreground" />
-                  </div>
-                  Configurações
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center py-12 text-muted-foreground">
-                  <div className="p-4 rounded-full bg-muted/30 w-fit mx-auto mb-4">
-                    <Settings className="h-12 w-12 opacity-50" />
-                  </div>
-                  <p className="text-lg font-medium mb-2">Configurações em desenvolvimento</p>
-                  <p className="text-sm">Painel administrativo será implementado na Fase 2</p>
-                </div>
-              </CardContent>
-            </Card>
+            <MedicalCard
+              title="Configurações do Sistema"
+              subtitle="Personalize sua experiência médica"
+              icon={Settings}
+              variant="elevated"
+            >
+              <div className="text-center py-12">
+                <Settings className="h-16 w-16 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-700 mb-2">
+                  Configurações em Desenvolvimento
+                </h3>
+                <p className="text-slate-500">
+                  Opções de personalização e configuração estarão disponíveis em breve.
+                </p>
+              </div>
+            </MedicalCard>
           </TabsContent>
         </Tabs>
+      </div>
     </div>
   );
 }

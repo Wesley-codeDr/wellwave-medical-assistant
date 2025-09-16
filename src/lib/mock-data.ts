@@ -260,3 +260,18 @@ export function getDashboardStats(columns: Column[]) {
     }))
   };
 }
+
+// Função para obter dados mockados completos
+export function getMockData() {
+  const columns = getInitialColumns();
+  const stats = getDashboardStats(columns);
+  const completedTasks = columns.find(col => col.id === 'concluido')?.tasks.length || 0;
+  
+  return {
+    tasks: MOCK_TASKS,
+    stats: {
+      ...stats,
+      completedTasks
+    }
+  };
+}
